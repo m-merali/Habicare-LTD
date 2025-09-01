@@ -1,10 +1,9 @@
-/* Habicare LTD — Interactive single-screen landing (GitHub Pages ready) */
 :root{
   --brand:#9ca88c;
   --bg:#0a0a0a;
   --fg:#eaeaea;
   --muted:#b9c3ac;
-  --card: #111315;
+  --card:#111315;
   --ring1: hsla(90,10%,70%,.15);
   --ring2: hsla(90,10%,70%,.07);
 }
@@ -23,81 +22,52 @@
 html,body{height:100%}
 body{
   margin:0;
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
   color:var(--fg);
   background: radial-gradient(1200px 800px at 10% 10%, rgba(156,168,140,.12), transparent 60%),
               radial-gradient(1000px 600px at 90% 90%, rgba(156,168,140,.10), transparent 65%),
               var(--bg);
-  overflow:hidden; /* No scrolling */
+  overflow:hidden;
 }
 
 /* Canvas background */
-#bg{
-  position:fixed; inset:0;
-  z-index:-1;
-}
+#bg{position:fixed; inset:0; z-index:-1;}
 
-/* Stage layout — perfectly centered in both axes */
+/* Stage layout — evenly distributed stack */
 .stage{
   min-height:100svh;
-  display:grid;
-  /* Center content (x & y) without 1fr spacers */
-  place-content:center;
-  place-items:center;
-  grid-template-rows:auto;
-  gap:clamp(0.5rem, 2.5vw, 1.25rem);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:clamp(1rem, 3vh, 2rem);
   padding: clamp(16px, 3vw, 48px);
   text-align:center;
-  position:relative;
   isolation:isolate;
 }
-
-/* Skip link (hidden unless focused) */
-.skip{
-  position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;
-}
-.skip:focus{position:static; width:auto; height:auto; padding:.5rem .75rem; background:var(--card); border-radius:999px; box-shadow:0 0 0 2px var(--brand);}
 
 /* Logo */
 .logo-wrap{
   position:relative;
-  width:clamp(180px, 38vw, 340px);
+  width:clamp(180px, 30vw, 300px);
   aspect-ratio:1/1;
   filter: drop-shadow(0 10px 30px rgba(0,0,0,.25));
   animation: float 6s ease-in-out infinite;
 }
-.logo{
-  width:100%; height:100%; object-fit:contain; display:block;
-  transform:translateZ(0);
-}
-.ring{
-  position:absolute; inset:-8%;
-  border-radius:999px;
-  border:2px solid var(--ring1);
-  animation: pulse 4s ease-in-out infinite;
-}
+.logo{width:100%; height:100%; object-fit:contain; display:block; transform:translateZ(0);}
+.ring{position:absolute; inset:-8%; border-radius:999px; border:2px solid var(--ring1); animation: pulse 4s ease-in-out infinite;}
 .ring-2{ inset:-16%; border-color:var(--ring2); animation-delay:1.2s; }
 
-@keyframes float{
-  0%,100%{ transform: translateY(0) }
-  50%{ transform: translateY(-8px) }
-}
-@keyframes pulse{
-  0%,100%{ transform: scale(1); opacity:.9 }
-  50%{ transform: scale(1.04); opacity:.6 }
-}
+@keyframes float{0%,100%{ transform: translateY(0)} 50%{ transform: translateY(-8px)}}
+@keyframes pulse{0%,100%{ transform: scale(1); opacity:.9} 50%{ transform: scale(1.04); opacity:.6}}
 
 /* Brand & tagline */
 .brand{
   margin:0;
-  line-height:1;
-  letter-spacing:.04em;
   font-weight:800;
-  font-size: clamp(32px, 7vw, 72px);
+  font-size: clamp(32px, 6vw, 68px);
   background: linear-gradient(180deg, var(--fg), var(--muted));
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
+  -webkit-background-clip:text; background-clip:text; color:transparent;
 }
 .tag{
   margin:0;
@@ -105,64 +75,59 @@ body{
   color: var(--muted);
 }
 
+/* Modern notice */
+.notice{
+  margin:0;
+  font-size: clamp(15px, 2vw, 20px);
+  padding: .6rem 1.2rem;
+  background: rgba(156,168,140,0.12);
+  border: 1px solid rgba(156,168,140,0.25);
+  border-radius: 14px;
+  color: var(--fg);
+  opacity: 0.9;
+  font-weight:500;
+  line-height:1.6;
+  letter-spacing:.01em;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 2s ease forwards, pulseNotice 7s ease-in-out infinite;
+}
+@keyframes fadeIn{from{opacity:0; transform:translateY(8px);} to{opacity:.9; transform:translateY(0);}}
+@keyframes pulseNotice{0%,100%{opacity:.9; transform:scale(1);} 50%{opacity:1; transform:scale(1.03);}}
+
 /* Button */
 .btn{
   --btn-bg: color-mix(in hsl, var(--brand) 86%, black);
   --btn-fg: #0b120a;
   display:inline-block;
-  padding: .9rem 1.2rem;
-  border-radius: 16px;
+  padding:.9rem 1.4rem;
+  border-radius:16px;
   background: linear-gradient(180deg, var(--brand), var(--btn-bg));
-  color: var(--btn-fg);
+  color:var(--btn-fg);
   text-decoration:none;
   font-weight:700;
   letter-spacing:.02em;
-  box-shadow: 0 6px 20px rgba(156,168,140,.35), inset 0 0 0 1px rgba(255,255,255,.25);
-  transform: translateZ(0);
-  transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+  box-shadow:0 6px 20px rgba(156,168,140,.35), inset 0 0 0 1px rgba(255,255,255,.25);
+  transition: transform .25s ease, box-shadow .25s ease;
 }
-.btn:hover{ transform: translateY(-2px) scale(1.02); box-shadow: 0 10px 30px rgba(156,168,140,.45), inset 0 0 0 1px rgba(255,255,255,.35); }
-.btn:active{ transform: translateY(0) scale(.98); }
+.btn:hover{ transform: translateY(-2px) scale(1.02); box-shadow:0 10px 30px rgba(156,168,140,.45), inset 0 0 0 1px rgba(255,255,255,.35);}
+.btn:active{ transform:translateY(0) scale(.98);}
 
-/* Fixed footer that doesn't push content off-center */
+/* Footer */
 .footer{
-  position:fixed;
-  bottom: clamp(8px, 2vh, 20px);
-  left:0; right:0;
+  position:fixed; bottom:clamp(8px,2vh,20px); left:0; right:0;
   display:flex; align-items:center; justify-content:center; gap:.75rem;
-  opacity:.9; font-size:.9rem;
-  z-index:10;
+  opacity:.9; font-size:.9rem; z-index:10;
 }
 .footer small{opacity:.8}
-.mode-toggle{
-  margin-left:.5rem;
-  border:0;
-  background:var(--card);
-  color:var(--fg);
-  border-radius:999px;
-  padding:.4rem .6rem;
-  cursor:pointer;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
-}
+.mode-toggle{margin-left:.5rem; border:0; background:var(--card); color:var(--fg); border-radius:999px; padding:.4rem .6rem; cursor:pointer;}
 
-/* Explicit light mode override (for JS toggle) */
+/* Light mode override */
 .light :root, body.light{
   --bg:#fafafa; --fg:#0a0a0a; --card:#ffffff;
-  --ring1: hsla(90,10%,40%,.12);
-  --ring2: hsla(90,10%,40%,.06);
+  --ring1: hsla(90,10%,40%,.12); --ring2: hsla(90,10%,40%,.06);
 }
 
-/* Subtle pointer parallax on entire stage */
-.stage:hover .logo-wrap{ animation-play-state: paused; }
-
-/* Reduced motion */
+/* Disable motion if reduced */
 @media (prefers-reduced-motion: reduce){
-  .logo-wrap{ animation: none }
-  .ring{ animation: none }
-  .btn, .stage *{ transition: none !important; }
-}
-
-/* Small devices: keep spacing tight */
-@media (max-width: 480px){
-  .stage{ gap:.65rem; }
+  .logo-wrap{ animation:none } .ring{ animation:none } .btn,.stage *{ transition:none !important;}
 }
